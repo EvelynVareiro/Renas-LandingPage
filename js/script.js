@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.width = '100%';
   };
   const unlockPageScroll = () => {
+    const savedScrollY = pageScrollY;
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
     document.documentElement.classList.remove('modal-open');
     document.body.classList.remove('modal-open');
     document.body.style.position = '';
@@ -130,7 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
-    window.scrollTo(0, pageScrollY);
+    window.scrollTo({top:savedScrollY,left:0,behavior:'auto'});
+    requestAnimationFrame(() => {
+      window.scrollTo({top:savedScrollY,left:0,behavior:'auto'});
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    });
   };
   const openModal = id => {
     const dish = PRATOS[id]; if (!dish || !modal) return;
@@ -146,8 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
     visibleCloseButton?.focus({preventScroll:true});
   };
   const closeModal = () => {
-    if (!modal?.classList.contains('is-open')) return; modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true');
-    unlockPageScroll(); fields.image.src=''; lastFocus?.focus?.({preventScroll:true});
+    if (!modal?.classList.contains('is-open')) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    unlockPageScroll();
+    fields.image.src='';
+    const desktopPointer = window.matchMedia('(min-width: 768px) and (pointer: fine)').matches;
+    if (desktopPointer) lastFocus?.focus?.({preventScroll:true});
+    lastFocus = null;
   };
   document.querySelectorAll('.dish-open').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.dish)));
   closeButtons.forEach(button => button.addEventListener('click', closeModal));
