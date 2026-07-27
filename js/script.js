@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateNavbar, {passive:true}); updateNavbar();
 
   const modal = document.getElementById('dish-modal');
-  const closeButton = document.getElementById('dish-modal-close');
+  const closeButtons = [...document.querySelectorAll('[data-dish-modal-close]')];
   const fields = {
     image: document.getElementById('dish-modal-image'), category: document.getElementById('dish-modal-category'),
     title: document.getElementById('dish-modal-title'), description: document.getElementById('dish-modal-description'),
@@ -141,14 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
     fields.whatsapp.href=`https://wa.me/${WHATSAPP_RENAS}?text=${encodeURIComponent(`Olá, Rena's! Gostaria de saber mais sobre o prato: ${dish.nome}.`)}`;
     lockPageScroll();
     modal.scrollTop = 0;
-    modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); closeButton?.focus({preventScroll:true});
+    modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false');
+    const visibleCloseButton = closeButtons.find(button => getComputedStyle(button).display !== 'none');
+    visibleCloseButton?.focus({preventScroll:true});
   };
   const closeModal = () => {
     if (!modal?.classList.contains('is-open')) return; modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true');
     unlockPageScroll(); fields.image.src=''; lastFocus?.focus?.({preventScroll:true});
   };
   document.querySelectorAll('.dish-open').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.dish)));
-  closeButton?.addEventListener('click', closeModal);
+  closeButtons.forEach(button => button.addEventListener('click', closeModal));
   modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMobileMenu(); } });
 
