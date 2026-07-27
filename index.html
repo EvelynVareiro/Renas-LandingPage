@@ -148,21 +148,35 @@
     body { overflow-x: hidden; }
     button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
     .dish-card-image { aspect-ratio: 4 / 3; }
-    .dish-modal { visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease, visibility .25s ease; }
+    .dish-modal { visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .25s ease, visibility .25s ease; overscroll-behavior: contain; }
     .dish-modal.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
-    .dish-modal-panel { transform: translateY(20px) scale(.98); transition: transform .25s ease; }
+    .dish-modal-panel { transform: translateY(20px) scale(.98); transition: transform .25s ease; max-height: calc(100dvh - 3rem); }
     .dish-modal.is-open .dish-modal-panel { transform: translateY(0) scale(1); }
+    html.modal-open, body.modal-open { overflow: hidden !important; overscroll-behavior: none; }
     .floating-badge { border-radius: 9999px; }
     .floating-badge .badge-label { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width .3s ease, opacity .2s ease, margin .3s ease; }
     .floating-badge:hover .badge-label, .floating-badge:focus-visible .badge-label { max-width: 210px; opacity: 1; margin-left: .6rem; }
     .form-status { display:none; }
     .form-status.is-visible { display:block; }
     .mobile-safe { padding-bottom: max(1.5rem, env(safe-area-inset-bottom)); }
-    @media (max-width: 639px) {
+    @media (max-width: 767px) {
       #hero { min-height: 720px; align-items: center; }
       #hero > img { object-position: 48% center; }
       #hero .hero-content { padding-bottom: 4.5rem; padding-top: 8rem; }
-      .dish-modal-panel { max-height: 94svh; overflow-y: auto; }
+      .dish-modal {
+        display: block;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: max(.75rem, env(safe-area-inset-top));
+        padding-bottom: max(.75rem, env(safe-area-inset-bottom));
+      }
+      .dish-modal-panel {
+        max-height: none;
+        min-height: auto;
+        overflow: visible;
+        margin: 0 auto;
+      }
+      .dish-modal-panel > div:last-child { overflow: visible; }
       .floating-badge .badge-label { display:none; }
       .linkedin-badge { bottom: calc(1rem + env(safe-area-inset-bottom)); left: 1rem; }
       .whatsapp-badge { bottom: calc(1rem + env(safe-area-inset-bottom)); right: 1rem; }
