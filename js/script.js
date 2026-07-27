@@ -1,7 +1,7 @@
 // Configurações fáceis de editar
 const WHATSAPP_RENAS = '5512996539177';
 // Troque SEU-USUARIO pelo endereço correto do seu perfil no LinkedIn.
-const LINKEDIN_DESENVOLVEDORA = 'https://www.linkedin.com/in/SEU-USUARIO';
+const LINKEDIN_DESENVOLVEDORA = 'https://www.linkedin.com/in/evelyn-vareiro';
 const PRATOS = {
   "1": {
     "nome": "Medalhão de Filé Mignon ao Molho de Vinho Tinto",
