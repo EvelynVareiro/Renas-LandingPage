@@ -1,7 +1,7 @@
 // Configurações fáceis de editar
 const WHATSAPP_RENAS = '5512996539177';
 // Troque SEU-USUARIO pelo endereço correto do seu perfil no LinkedIn.
-const LINKEDIN_DESENVOLVEDORA = 'https://www.linkedin.com/in/evelyn-vareiro';
+const LINKEDIN_DESENVOLVEDORA = 'https://www.linkedin.com/in/SEU-USUARIO';
 const PRATOS = {
   "1": {
     "nome": "Medalhão de Filé Mignon ao Molho de Vinho Tinto",
@@ -60,6 +60,32 @@ const PRATOS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  const root = document.documentElement;
+  const themeColor = document.getElementById('theme-color');
+  const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+  const updateThemeControls = theme => {
+    const dark = theme === 'dark';
+    const action = dark ? 'Ativar modo claro' : 'Ativar modo escuro';
+    themeButtons.forEach(button => {
+      button.setAttribute('aria-label', action);
+      button.setAttribute('title', action);
+      const label = button.querySelector('[data-theme-label]');
+      if (label) label.textContent = action;
+    });
+    if (themeColor) themeColor.content = dark ? '#1c1a18' : '#faf5ec';
+  };
+  const setTheme = (theme, save = true) => {
+    const nextTheme = theme === 'light' ? 'light' : 'dark';
+    root.dataset.theme = nextTheme;
+    updateThemeControls(nextTheme);
+    if (save) {
+      try { localStorage.setItem('renas-theme', nextTheme); } catch {}
+    }
+  };
+  setTheme(root.dataset.theme, false);
+  themeButtons.forEach(button => button.addEventListener('click', () => {
+    setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+  }));
   document.querySelectorAll('[data-linkedin]').forEach(link => link.href = LINKEDIN_DESENVOLVEDORA);
 
   const menuButton = document.getElementById('menu-btn');
