@@ -152,6 +152,13 @@
     .dish-modal.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
     .dish-modal-panel { transform: translateY(20px) scale(.98); transition: transform .25s ease; max-height: calc(100dvh - 3rem); }
     .dish-modal.is-open .dish-modal-panel { transform: translateY(0) scale(1); }
+    #dish-modal-close {
+      position: fixed;
+      top: max(1rem, env(safe-area-inset-top));
+      right: max(1rem, env(safe-area-inset-right));
+      z-index: 130;
+      box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
     html.modal-open, body.modal-open { overflow: hidden !important; overscroll-behavior: none; }
     .floating-badge { border-radius: 9999px; }
     .floating-badge .badge-label { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width .3s ease, opacity .2s ease, margin .3s ease; }
@@ -529,7 +536,7 @@
 </div>
 </section><div aria-hidden="true" aria-labelledby="dish-modal-title" aria-modal="true" class="dish-modal fixed inset-0 z-[100] bg-black/80 p-3 sm:p-6 flex items-center justify-center" id="dish-modal" role="dialog">
 <div class="dish-modal-panel relative bg-bark border border-white/10 shadow-2xl w-full max-w-5xl grid lg:grid-cols-[0.9fr_1.1fr] overflow-hidden">
-<button aria-label="Fechar detalhes do prato" class="absolute top-3 right-3 z-10 w-11 h-11 bg-charcoal/90 border border-white/10 text-cream hover:text-gold hover:border-gold flex items-center justify-center text-2xl transition-colors" id="dish-modal-close" type="button">×</button>
+<button aria-label="Fechar detalhes do prato" class="w-12 h-12 rounded-full bg-charcoal/95 border border-white/20 text-cream hover:text-gold hover:border-gold flex items-center justify-center text-3xl leading-none transition-colors" id="dish-modal-close" type="button"><span aria-hidden="true">×</span></button>
 <div class="bg-charcoal min-h-64 lg:min-h-[580px]">
 <img alt="" class="w-full h-full max-h-[45svh] lg:max-h-none object-cover" id="dish-modal-image" src=""/>
 </div>
